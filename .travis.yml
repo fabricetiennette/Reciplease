@@ -1,0 +1,8 @@
+language: swift 
+osx_image: xcode11.3
+jobs:
+  include:
+  - script: xcodebuild clean build test -workspace Reciplease.xcworkspace -scheme Reciplease -destination "platform=iOS Simulator,name=iPhone 11,OS=13.3" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO -enableCodeCoverage YES
+    before_install: pod repo update
+    after_script: bash <(curl -s https://codecov.io/bash) -t d88ad9dd-58ce-4eb6-9338-5a5df0ebfd6b
+  - script: swiftlint
