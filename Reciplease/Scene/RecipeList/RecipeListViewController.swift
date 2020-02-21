@@ -1,5 +1,5 @@
 //
-//  SecondViewController.swift
+//  RecipeListViewController.swift
 //  Reciplease
 //
 //  Created by Fabrice Etiennette on 13/02/2020.
@@ -8,10 +8,11 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
+class RecipeListViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "Recipes list"
     }
 }
