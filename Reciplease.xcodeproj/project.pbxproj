@@ -13,6 +13,9 @@
 		2C51BD292400446C006B9463 /* RecipeDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51BD282400446C006B9463 /* RecipeDetailsViewController.swift */; };
 		2C51BD2C240048E1006B9463 /* Favorite.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C51BD2B240048E1006B9463 /* Favorite.storyboard */; };
 		2C51BD2E24004994006B9463 /* FavoriteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51BD2D24004994006B9463 /* FavoriteTableViewController.swift */; };
+		2C61BB852406883C00E42F03 /* RecipleaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C61BB842406883C00E42F03 /* RecipleaseClient.swift */; };
+		2C61BB8824068A2B00E42F03 /* RecipeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C61BB8724068A2B00E42F03 /* RecipeData.swift */; };
+		2C61BB8E2406B25400E42F03 /* NetWorkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C61BB8D2406B25400E42F03 /* NetWorkError.swift */; };
 		2C90D34C2405856000B69BF4 /* FavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C90D34B2405856000B69BF4 /* FavoriteTableViewCell.swift */; };
 		2C90D34E2405E1C200B69BF4 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C90D34D2405E1C200B69BF4 /* TitleTableViewCell.swift */; };
 		2C9B34722400887E00348158 /* ShadowCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9B34712400887E00348158 /* ShadowCardView.swift */; };
@@ -49,6 +52,9 @@
 		2C51BD282400446C006B9463 /* RecipeDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsViewController.swift; sourceTree = "<group>"; };
 		2C51BD2B240048E1006B9463 /* Favorite.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Favorite.storyboard; sourceTree = "<group>"; };
 		2C51BD2D24004994006B9463 /* FavoriteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewController.swift; sourceTree = "<group>"; };
+		2C61BB842406883C00E42F03 /* RecipleaseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipleaseClient.swift; sourceTree = "<group>"; };
+		2C61BB8724068A2B00E42F03 /* RecipeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeData.swift; sourceTree = "<group>"; };
+		2C61BB8D2406B25400E42F03 /* NetWorkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetWorkError.swift; sourceTree = "<group>"; };
 		2C90D34B2405856000B69BF4 /* FavoriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewCell.swift; sourceTree = "<group>"; };
 		2C90D34D2405E1C200B69BF4 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
 		2C9B34712400887E00348158 /* ShadowCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowCardView.swift; sourceTree = "<group>"; };
@@ -116,6 +122,14 @@
 			path = Favorite;
 			sourceTree = "<group>";
 		};
+		2C61BB8624068A0500E42F03 /* RecipeData */ = {
+			isa = PBXGroup;
+			children = (
+				2C61BB8724068A2B00E42F03 /* RecipeData.swift */,
+			);
+			path = RecipeData;
+			sourceTree = "<group>";
+		};
 		2C892A9123FDF69800E786B2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +143,7 @@
 		2C892A9223FDF6B900E786B2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2C61BB8624068A0500E42F03 /* RecipeData */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -154,6 +169,8 @@
 		2C892A9523FDF70400E786B2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				2C61BB8D2406B25400E42F03 /* NetWorkError.swift */,
+				2C61BB842406883C00E42F03 /* RecipleaseClient.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -464,8 +481,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C90D34E2405E1C200B69BF4 /* TitleTableViewCell.swift in Sources */,
+				2C61BB852406883C00E42F03 /* RecipleaseClient.swift in Sources */,
 				2C4BFADB2401F867001609E1 /* ImageView.swift in Sources */,
 				2C1EBC9123FF66710068F623 /* SceneDelegate.swift in Sources */,
+				2C61BB8824068A2B00E42F03 /* RecipeData.swift in Sources */,
 				2C51BD292400446C006B9463 /* RecipeDetailsViewController.swift in Sources */,
 				2C9B34722400887E00348158 /* ShadowCardView.swift in Sources */,
 				2CCD3E3C23F5E0FB00D41BC3 /* RecipeListTableViewController.swift in Sources */,
@@ -473,6 +492,7 @@
 				2CCD3E4223F5E0FB00D41BC3 /* Reciplease.xcdatamodeld in Sources */,
 				2C90D34C2405856000B69BF4 /* FavoriteTableViewCell.swift in Sources */,
 				2C9B347A2400998C00348158 /* ButtonView.swift in Sources */,
+				2C61BB8E2406B25400E42F03 /* NetWorkError.swift in Sources */,
 				2C9B34782400956D00348158 /* SearchHeaderTableViewCell.swift in Sources */,
 				2CCD3E3623F5E0FB00D41BC3 /* AppDelegate.swift in Sources */,
 				2C51BD2E24004994006B9463 /* FavoriteTableViewController.swift in Sources */,
