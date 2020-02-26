@@ -1,4 +1,4 @@
-// swiftlint:disable unused_closure_parameter line_length
+// swiftlint:disable unused_closure_parameter line_length force_cast
 //
 //  AppDelegate.swift
 //  Reciplease
@@ -38,6 +38,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         return container
     }()
+
+    static var persistentContainer: NSPersistentContainer {
+        return (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+    }
+
+    static var viewContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
 
     // MARK: - Core Data Saving support
 
