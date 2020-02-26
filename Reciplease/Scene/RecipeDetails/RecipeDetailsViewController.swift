@@ -14,8 +14,7 @@ class RecipeDetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        recipeDetailsTableView.delegate = self
-        recipeDetailsTableView.dataSource = self
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
 }
 
@@ -35,7 +34,7 @@ extension RecipeDetailsViewController: UITableViewDelegate, UITableViewDataSourc
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 100
+            return 375
         } else if indexPath.section == 1 {
             return 150
         } else if indexPath.section == 2 {
