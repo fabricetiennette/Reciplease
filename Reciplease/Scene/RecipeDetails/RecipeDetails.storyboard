@@ -37,7 +37,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="753"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="titleCell" rowHeight="375" id="420-5A-Qze" customClass="TitleTableViewCell" customModule="Reciplease" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="titleCell" rowHeight="375" id="420-5A-Qze" customClass="TitleCell" customModule="Reciplease" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="375"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="420-5A-Qze" id="PaW-4u-Fu8">
@@ -80,8 +80,13 @@
                                                 <constraint firstItem="0Au-Sd-PxH" firstAttribute="leading" secondItem="PaW-4u-Fu8" secondAttribute="leadingMargin" id="v9j-QL-Unx"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="imageFromRecipe" destination="bP7-y4-tVC" id="cC0-Rc-bKQ"/>
+                                            <outlet property="sourceLabel" destination="Afv-nN-PdG" id="8ph-tU-C52"/>
+                                            <outlet property="titleLabel" destination="JrM-Co-Efo" id="jvF-Hf-y5Y"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="recipeTimeCell" rowHeight="150" id="J4o-Cc-RfF">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="recipeTimeCell" rowHeight="150" id="J4o-Cc-RfF" customClass="RecipePTKCell" customModule="Reciplease" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="403" width="414" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="J4o-Cc-RfF" id="JlK-BF-XwA">
@@ -224,6 +229,11 @@
                                                 <constraint firstItem="ejV-tc-SmV" firstAttribute="top" secondItem="JlK-BF-XwA" secondAttribute="topMargin" constant="-10" id="dzA-0M-Ylz"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="caloriesLabel" destination="n2j-9y-Rga" id="uSJ-Lz-TMT"/>
+                                            <outlet property="totalTimeLabel" destination="B7W-ZJ-mTg" id="8ge-uz-txu"/>
+                                            <outlet property="yeildLabel" destination="c7T-Ua-UuA" id="bNX-oH-6ir"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ingredientTextCell" rowHeight="60" id="l4b-JS-JER">
                                         <rect key="frame" x="0.0" y="553" width="414" height="60"/>
@@ -254,7 +264,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ingredientCell" rowHeight="50" id="DJl-Hi-MF8">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ingredientCell" rowHeight="50" id="DJl-Hi-MF8" customClass="IngredientsListCell" customModule="Reciplease" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="613" width="414" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DJl-Hi-MF8" id="gas-Ve-eZ6">
@@ -283,6 +293,9 @@
                                                 <constraint firstItem="Pw5-tj-mii" firstAttribute="leading" secondItem="hRh-E2-lFt" secondAttribute="trailing" constant="10" id="cJL-qd-ER9"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="ingredientLabel" destination="Pw5-tj-mii" id="aNp-Qe-Ijb"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -300,6 +313,9 @@
                                 <state key="normal" title="Get direction">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="getDirectionButtonTapped:" destination="gpn-1m-gSa" eventType="touchUpInside" id="wSc-bV-vFM"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

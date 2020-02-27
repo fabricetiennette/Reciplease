@@ -8,19 +8,14 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SearchViewController: UIViewController {
 
     @IBOutlet weak var searchTableView: UITableView!
     @IBOutlet weak var searchButton: UIButton!
 
-    override func viewWillLayoutSubviews() {
-        setupNavBar()
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchTableView.delegate = self
-        searchTableView.dataSource = self
+        setupNavBar()
     }
 
     @IBAction func searchButtonTapped(_ sender: Any) {
@@ -28,6 +23,9 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let vc = storyboard.instantiateViewController(withIdentifier: "RecipeList")
         navigationController!.pushViewController(vc, animated: true)
     }
+}
+
+extension SearchViewController {
 
     func setupNavBar() {
         let searchController = UISearchController(searchResultsController: nil)
@@ -37,6 +35,9 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         navigationItem.title = "Search"
         definesPresentationContext = true
     }
+}
+
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
     // MARK: - Table view data source
 

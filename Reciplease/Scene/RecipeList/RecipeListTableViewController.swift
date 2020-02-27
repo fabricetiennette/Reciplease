@@ -11,13 +11,11 @@ import UIKit
 class RecipeListTableViewController: UITableViewController {
 
     override func viewWillLayoutSubviews() {
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = "Recipes list"
+        configureNavBar()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
 
     @IBAction func recipeTapped(_ sender: Any) {
@@ -25,6 +23,17 @@ class RecipeListTableViewController: UITableViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: "RecipeDetails")
         navigationController!.pushViewController(vc, animated: true)
     }
+}
+
+extension RecipeListTableViewController {
+
+    func configureNavBar() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "Recipes list"
+    }
+}
+
+extension RecipeListTableViewController {
 
     // MARK: - Table view data source
 

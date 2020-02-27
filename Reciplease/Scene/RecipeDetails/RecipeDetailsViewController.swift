@@ -16,6 +16,11 @@ class RecipeDetailsViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = false
     }
+
+    @IBAction func getDirectionButtonTapped(_ sender: Any) {
+        print("Get direction Tapped")
+    }
+    
 }
 
 extension RecipeDetailsViewController: UITableViewDelegate, UITableViewDataSource {

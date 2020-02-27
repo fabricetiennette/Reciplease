@@ -1,5 +1,5 @@
 //
-//  SearchHeaderTableViewCell.swift
+//  SearchHeaderCell.swift
 //  Reciplease
 //
 //  Created by Fabrice Etiennette on 21/02/2020.
@@ -8,11 +8,15 @@
 
 import UIKit
 
-class SearchHeaderTableViewCell: UITableViewCell {
+class SearchHeaderCell: UITableViewCell {
 
     @IBOutlet weak var clearButton: UIButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()
+    }
+
+    @IBAction func clearButtonTapped(_ sender: Any) {
+        print("Clear button tapped")
     }
 }

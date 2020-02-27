@@ -10,10 +10,12 @@ import UIKit
 
 class FavoriteTableViewController: UITableViewController {
 
+    override func viewWillLayoutSubviews() {
+        configureNavBar()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = "Favorite"
     }
 
     @IBAction func cellTapped(_ sender: Any) {
@@ -21,6 +23,17 @@ class FavoriteTableViewController: UITableViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: "RecipeDetails")
         navigationController!.pushViewController(vc, animated: true)
     }
+}
+
+extension FavoriteTableViewController {
+
+    func configureNavBar() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "Favorite"
+    }
+}
+
+extension FavoriteTableViewController {
 
     // MARK: - Table view data source
 

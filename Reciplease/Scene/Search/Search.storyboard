@@ -35,7 +35,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="searchHeaderCell" rowHeight="80" id="hPU-Bc-Jp8" customClass="SearchHeaderTableViewCell" customModule="Reciplease" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="searchHeaderCell" rowHeight="80" id="hPU-Bc-Jp8" customClass="SearchHeaderCell" customModule="Reciplease" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hPU-Bc-Jp8" id="gYT-I6-rfR">
@@ -58,6 +58,9 @@
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <state key="normal" title="Clear"/>
+                                                    <connections>
+                                                        <action selector="clearButtonTapped:" destination="hPU-Bc-Jp8" eventType="touchUpInside" id="Xtd-7g-He5"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -75,7 +78,7 @@
                                             <outlet property="clearButton" destination="Yyv-9Q-4gz" id="CCf-QA-j4r"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ingredientCell" rowHeight="60" id="YNv-w8-icl">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ingredientCell" rowHeight="60" id="YNv-w8-icl" customClass="IngredientCell" customModule="Reciplease" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="108" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YNv-w8-icl" id="4T0-ZS-8id">
@@ -135,6 +138,10 @@
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="T9F-cb-4AN" id="ckx-Bh-u68"/>
+                                    <outlet property="delegate" destination="T9F-cb-4AN" id="hEn-pT-apq"/>
+                                </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3dT-mT-fHN" userLabel="ButtonView">
                                 <rect key="frame" x="0.0" y="753" width="414" height="60"/>
