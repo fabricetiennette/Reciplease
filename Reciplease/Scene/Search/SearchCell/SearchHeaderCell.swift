@@ -10,13 +10,24 @@ import UIKit
 
 class SearchHeaderCell: UITableViewCell {
 
-    @IBOutlet weak var clearButton: UIButton!
+    @IBOutlet private weak var clearButton: UIButton!
+    @IBOutlet private weak var yourIngredientLabel: UILabel!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
+    var removeIngredientHandler: () -> Void = {}
 
     @IBAction func clearButtonTapped(_ sender: Any) {
-        print("Clear button tapped")
+        removeIngredientHandler()
+    }
+
+    func configureCell(_ ingredient: [String], _ searchButton: UIButton) {
+        if ingredient.count == 0 {
+            clearButton.isHidden = true
+            yourIngredientLabel.isHidden = true
+            searchButton.isHidden = true
+        } else {
+            clearButton.isHidden = false
+            yourIngredientLabel.isHidden = false
+            searchButton.isHidden = false
+        }
     }
 }

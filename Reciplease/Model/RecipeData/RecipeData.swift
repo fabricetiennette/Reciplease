@@ -9,7 +9,14 @@
 import Foundation
 
 struct RecipeData: Decodable {
+    let query: String
     let hits: [Hits]
+
+    enum CodingKeys: String, CodingKey {
+        case query = "q"
+
+        case hits
+    }
 }
 
 struct Hits: Decodable {

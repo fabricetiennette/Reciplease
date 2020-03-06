@@ -10,13 +10,13 @@ import Alamofire
 
 struct RecipleaseClient {
 
-    private let recipleaseSession: Session
+    private let session: Session
     let baseURL = "https://api.edamam.com/search?"
     let appId = "13a8cfe3"
     let appKey = "52ba666b724b469493e5b13708898d64"
 
-    init(recipleaseSession: Session = Session.default) {
-        self.recipleaseSession = recipleaseSession
+    init(session: Session = Session.default) {
+        self.session = session
     }
 
     // MARK: - getRecipes
@@ -26,7 +26,7 @@ struct RecipleaseClient {
     ) {
         guard let recipleaseURL = URL(string: "\(baseURL)q=\(ingredients)&app_id=\(appId)&app_key=\(appKey)") else { return }
 
-        let request = recipleaseSession.request(recipleaseURL)
+        let request = session.request(recipleaseURL)
         request.responseDecodable(of: RecipeData.self) { (response) in
             guard let data = response.data else {
                 callback(.failure(NetWorkError.noData))

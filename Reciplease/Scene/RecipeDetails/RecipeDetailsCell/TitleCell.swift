@@ -13,9 +13,14 @@ class TitleCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var sourceLabel: UILabel!
     @IBOutlet weak var imageFromRecipe: UIImageView!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+
+    private var recipe: SelectedRecipe!
+
+    func configureCell(recipe: SelectedRecipe, indexPath: IndexPath) {
+        self.recipe = recipe
+
+        imageFromRecipe.image = recipe.image
+        titleLabel.text = recipe.title
+        sourceLabel.text = recipe.source
     }
 }

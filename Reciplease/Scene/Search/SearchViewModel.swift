@@ -9,15 +9,40 @@
 import Foundation
 
 class SearchViewModel {
-    //        client.getRecipes(with: "chicken") { (result) in
-    //            switch result {
-    //            case .success(let recipe):
-    //                self.hits = recipe.hits
-    //                let first = self.hits.first
-    //                print("Hello it Wooooork : - \(String(describing: first?.recipe.title))")
-    //                print(self.hits.count)
-    //            case .failure(let error):
-    //                print(error.localizedDescription)
-    //            }
-    //        }
+
+    var reloadHandler: () -> Void = {}
+    var errorHandler: (_ title: String, _ message: String) -> Void = { _, _ in }
+    var userIngredients: [String] = [] {
+        didSet {
+            reloadHandler()
+        }
+    }
+
+    var prefersLargeTitles: Bool {
+        true
+    }
+
+    var title: String {
+        "Search"
+    }
+
+    var ingredients: String {
+        userIngredients.joined(separator: "+")
+    }
+
+    func numberOfRows(in section: Int) -> Int {
+        switch section {
+        case 0:
+            return 1
+        default:
+            return userIngredients.count
+        }
+    }
+
+    func addIngredient(_ ingredient: String) {
+        if ingredient.hasSpecialCharacters() {
+            errorHandler("Error", "Please enter a valid ingredient")
+        }
+        userIngredients.append(ingredient)
+    }
 }

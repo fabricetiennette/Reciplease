@@ -10,15 +10,10 @@ import UIKit
 
 class IngredientCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    @IBOutlet private weak var userIngredient: UILabel!
+
+    func configureCell(_ ingredient: [String], _ indexPath: IndexPath) {
+        let ingredientText = ingredient[indexPath.row]
+        userIngredient.text = ingredientText
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

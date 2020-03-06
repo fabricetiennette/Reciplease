@@ -14,8 +14,15 @@ class RecipePTKCell: UITableViewCell {
     @IBOutlet weak var totalTimeLabel: UILabel!
     @IBOutlet weak var caloriesLabel: UILabel!
 
-        override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    private var recipe: SelectedRecipe!
+
+    func configureCell(recipe: SelectedRecipe, indexPath: IndexPath) {
+        self.recipe = recipe
+
+        guard let calories = recipe.calories else { return }
+
+        yeildLabel.text = recipe.yield
+        totalTimeLabel.text = recipe.time
+        caloriesLabel.text = "\(Int(calories))"
     }
 }

@@ -11,9 +11,12 @@ import UIKit
 class IngredientsListCell: UITableViewCell {
 
     @IBOutlet weak var ingredientLabel: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+
+    private var recipe: SelectedRecipe!
+
+    func configureCell(recipe: SelectedRecipe, indexPath: IndexPath) {
+        self.recipe = recipe
+
+        ingredientLabel.text = recipe.ingredientLines[indexPath.row]
     }
 }

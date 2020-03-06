@@ -1,3 +1,4 @@
+// swiftlint:disable force_cast
 //
 //  RecipeListTableViewController.swift
 //  Reciplease
@@ -7,29 +8,56 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
-class RecipeListTableViewController: UITableViewController {
+class RecipeListTableViewController: UITableViewController, Storyboarded {
+
+    var coordinator: SearchCoordinator?
+
+    var viewModel: RecipeListViewModel!
 
     override func viewWillLayoutSubviews() {
-        configureNavBar()
+        configureNavigationBar()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        if viewModel.recipe.isEmpty {
+            let size = CGSize(width: 50, height: 50)
+            startAnimating(size, type: .pacman, color: .brown, fadeInAnimation: nil)
+            viewModel.getRecipes()
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-
-    @IBAction func recipeTapped(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "RecipeDetails", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "RecipeDetails")
-        navigationController!.pushViewController(vc, animated: true)
+        configureViewModel()
     }
 }
 
-extension RecipeListTableViewController {
+extension RecipeListTableViewController: NVActivityIndicatorViewable {
 
-    func configureNavBar() {
+    func configureNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Recipes list"
+    }
+
+    func configureViewModel() {
+        viewModel.recipeHandler = { [weak self] recipe in
+            guard let me = self else { return }
+            me.coordinator?.showRecipeDetail(with: recipe)
+        }
+
+        viewModel.reloadHandler = { [weak self] in
+            guard let me = self else { return }
+            me.tableView.reloadData()
+            me.stopAnimating()
+        }
+
+        viewModel.errorHandler = { [weak self] title, message in
+            guard let me = self else { return }
+            me.showAlert(title: title, message: message)
+            me.stopAnimating()
+        }
     }
 }
 
@@ -39,12 +67,12 @@ extension RecipeListTableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 2
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return viewModel.recipe.count
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -52,7 +80,16 @@ extension RecipeListTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "recipeListCell", for: indexPath)
+        let recipe = viewModel.recipe[indexPath.item].recipe
+        let ingredient =  viewModel.ingredient
+            let cell = tableView.dequeueReusableCell(withIdentifier: "recipeListCell", for: indexPath) as! RecipeListCell
+        cell.configureCell(recipe: recipe, ingredient: ingredient, indexPath: indexPath)
         return cell
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let indexPath = tableView.indexPathForSelectedRow else { return }
+        let selectedCell = tableView.cellForRow(at: indexPath) as! RecipeListCell
+        viewModel.showDetails(of: selectedCell)
     }
 }

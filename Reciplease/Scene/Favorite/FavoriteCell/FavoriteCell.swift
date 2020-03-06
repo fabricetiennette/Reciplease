@@ -17,11 +17,6 @@ class FavoriteCell: UITableViewCell {
     @IBOutlet weak var recipeIngredients: UILabel!
     @IBOutlet weak var heartIcon: UIImageView!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
     @IBAction func favoriteButtonTapped(_ sender: Any) {
         print("fav button tapped in fav section")
         heartIcon.isHighlighted = (heartIcon.isHighlighted == true) ? false : true

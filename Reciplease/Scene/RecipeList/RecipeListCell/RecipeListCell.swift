@@ -17,14 +17,38 @@ class RecipeListCell: UITableViewCell {
     @IBOutlet weak var recipeIngredients: UILabel!
     @IBOutlet weak var heartIcon: UIImageView!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    var source = ""
+    var calories = 0.0
+    var ingredientLines: [String] = []
+    var url = ""
+
+    private var recipe: Recipe!
 
     @IBAction func favoriteButtonTapped(_ sender: Any) {
-        print("fav button tapped in recipe list")
         heartIcon.isHighlighted = (heartIcon.isHighlighted == true) ? false : true
       }
 
+    func configureCell(recipe: Recipe, ingredient: String, indexPath: IndexPath) {
+        self.recipe = recipe
+
+        source = recipe.source
+        calories = recipe.calories
+        ingredientLines = recipe.ingredientLines
+        url = recipe.url
+
+        if let url = URL(string: recipe.image) {
+            guard let data = try? Data(contentsOf: url) else { return }
+            recipeImage.image = UIImage(data: data)
+        }
+
+        if recipe.time == 0.0 {
+            recipeTime.text = "N.A"
+        } else {
+            recipeTime.text = "\(Int(recipe.time)) MINUTES"
+        }
+
+        recipeTitle.text = recipe.title
+        recipeYield.text = String(recipe.yield)
+        recipeIngredients.text = ingredient.replacingOccurrences(of: "+", with: ", ")
+    }
 }
