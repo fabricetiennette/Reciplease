@@ -21,18 +21,16 @@ class SearchCoordinator: Coordinator {
 
     func start() {
         let viewController = SearchViewController.instantiate()
-        let viewModel = SearchViewModel()
+        let viewModel = SearchViewModel(delegate: self)
         viewController.viewModel = viewModel
         viewController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 0)
-        viewController.coordinator = self
         navigationController.viewControllers = [viewController]
     }
 
-    func searchForRecipes(with ingredient: String) {
-        let viewModel = RecipeListViewModel(ingredient: ingredient)
+    func searchingRecipes(with ingredient: String) {
+        let viewModel = RecipeListViewModel(ingredient: ingredient, delegate: self)
         let viewController = RecipeListTableViewController.instantiate()
         viewController.viewModel = viewModel
-        viewController.coordinator = self
         navigationController.pushViewController(viewController, animated: true)
     }
 
@@ -40,7 +38,18 @@ class SearchCoordinator: Coordinator {
         let viewModel = RecipeDetailsViewModel(recipeSelected: selectedRecipe)
         let viewController = RecipeDetailsViewController.instantiate()
         viewController.viewModel = viewModel
-        viewController.coordinator = self
         navigationController.pushViewController(viewController, animated: true)
+    }
+}
+
+extension SearchCoordinator: SearchViewModeldelegate {
+    func searchForRecipes(with ingredient: String) {
+        searchingRecipes(with: ingredient)
+    }
+}
+
+extension SearchCoordinator: RecipeListViewModelDelegate {
+    func recipeDetail(with selectedRecipe: SelectedRecipe) {
+        showRecipeDetail(with: selectedRecipe)
     }
 }

@@ -8,14 +8,26 @@
 
 import Foundation
 
+protocol SearchViewModeldelegate: class {
+    func searchForRecipes(with ingredient: String)
+}
+
 class SearchViewModel {
 
-    var reloadHandler: () -> Void = {}
+    weak var delegate: SearchViewModeldelegate?
+
     var errorHandler: (_ title: String, _ message: String) -> Void = { _, _ in }
+    var messageHandler: (_ text: String) -> Void = { _ in }
+    var reloadHandler: () -> Void = {}
     var userIngredients: [String] = [] {
         didSet {
+            messageHandler("Ingredients missing 😢")
             reloadHandler()
         }
+    }
+
+    init(delegate: SearchViewModeldelegate?) {
+        self.delegate = delegate
     }
 
     var prefersLargeTitles: Bool {
@@ -24,10 +36,6 @@ class SearchViewModel {
 
     var title: String {
         "Search"
-    }
-
-    var ingredients: String {
-        userIngredients.joined(separator: "+")
     }
 
     func numberOfRows(in section: Int) -> Int {
@@ -42,7 +50,13 @@ class SearchViewModel {
     func addIngredient(_ ingredient: String) {
         if ingredient.hasSpecialCharacters() {
             errorHandler("Error", "Please enter a valid ingredient")
+        } else {
+            userIngredients.append(ingredient)
         }
-        userIngredients.append(ingredient)
+    }
+
+    func searchForRecipes() {
+        let ingredients = userIngredients.joined(separator: "+")
+        delegate?.searchForRecipes(with: ingredients)
     }
 }

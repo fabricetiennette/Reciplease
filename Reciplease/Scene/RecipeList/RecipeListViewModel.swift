@@ -8,7 +8,12 @@
 
 import Foundation
 
+protocol RecipeListViewModelDelegate: class {
+    func recipeDetail(with selectedRecipe: SelectedRecipe)
+}
 class RecipeListViewModel {
+
+    weak var delegate: RecipeListViewModelDelegate?
 
     private let resipleaseClient: RecipleaseClient
     var ingredient: String
@@ -18,10 +23,14 @@ class RecipeListViewModel {
     var recipe: [Hits] = []
     var selectedRecipe: [RecipeListCell] = []
 
-    init(ingredient: String, resipleaseClient: RecipleaseClient = .init()) {
-         self.ingredient = ingredient
+    init(ingredient: String,
+         delegate: RecipeListViewModelDelegate?,
+         resipleaseClient: RecipleaseClient = .init()
+    ) {
+        self.ingredient = ingredient
+        self.delegate = delegate
         self.resipleaseClient = resipleaseClient
-     }
+    }
 
     func getRecipes() {
         resipleaseClient.getRecipes(with: ingredient) { [weak self] result in
@@ -49,6 +58,7 @@ class RecipeListViewModel {
         let ingredientLines = recipe.ingredientLines
         let calories = recipe.calories
         let time = recipe.recipeTime.text
+        let ingredientChoose = ingredient
 
         let recipeSelected = SelectedRecipe(
             title: title,
@@ -58,8 +68,13 @@ class RecipeListViewModel {
             yield: yeild,
             ingredientLines: ingredientLines,
             calories: calories,
-            time: time
+            time: time,
+            ingredientChoose: ingredientChoose
         )
         recipeHandler(recipeSelected)
+    }
+
+    func showRecipeDetail(with recipe: SelectedRecipe) {
+        delegate?.recipeDetail(with: recipe)
     }
 }

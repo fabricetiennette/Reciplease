@@ -14,8 +14,6 @@ extension UIView {
         gradientLayer.frame = bounds
         gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
         gradientLayer.locations = [0.0, 1.0]
-//        gradientLayer.startPoint = CGPoint(x: 1.0, y: 1.0)
-//        gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
 
         layer.insertSublayer(gradientLayer, at: 0)
     }
@@ -39,5 +37,25 @@ extension UIView {
         border.backgroundColor = color.cgColor
         border.frame = CGRect(x: 0, y: self.frame.size.height - width, width: self.frame.size.width, height: width)
         self.layer.addSublayer(border)
+    }
+
+    func slideOut() {
+        let transition1: CATransition = CATransition()
+        let timeFunc1: CAMediaTimingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+        transition1.duration = 1.5
+        transition1.timingFunction = timeFunc1
+        transition1.type = CATransitionType.push
+        transition1.subtype = CATransitionSubtype.fromBottom
+        self.layer.add(transition1, forKey: kCATransition)
+    }
+
+    func slideInFromTop() {
+        let transition1: CATransition = CATransition()
+        let timeFunc1: CAMediaTimingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition1.duration = 1.5
+        transition1.timingFunction = timeFunc1
+        transition1.type = CATransitionType.push
+        transition1.subtype = CATransitionSubtype.fromTop
+        self.layer.add(transition1, forKey: kCATransition)
     }
 }

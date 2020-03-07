@@ -17,6 +17,7 @@ class RecipeListCell: UITableViewCell {
     @IBOutlet weak var recipeIngredients: UILabel!
     @IBOutlet weak var heartIcon: UIImageView!
 
+    var favoriteTapHandler: () -> Void = {}
     var source = ""
     var calories = 0.0
     var ingredientLines: [String] = []
@@ -25,6 +26,7 @@ class RecipeListCell: UITableViewCell {
     private var recipe: Recipe!
 
     @IBAction func favoriteButtonTapped(_ sender: Any) {
+        favoriteTapHandler()
         heartIcon.isHighlighted = (heartIcon.isHighlighted == true) ? false : true
       }
 

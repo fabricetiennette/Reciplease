@@ -12,7 +12,6 @@ class FavoritesCoordinator: Coordinator {
     var favoriteNavController = NavigationController()
 
     init() {
-        // Set up the master view controller
         favoriteNavController.navigationBar.prefersLargeTitles = true
         favoriteNavController.coordinator = self
         start()
@@ -24,4 +23,8 @@ class FavoritesCoordinator: Coordinator {
         viewController.coordinator = self
         favoriteNavController.viewControllers = [viewController]
     }
+}
+
+extension FavoritesCoordinator {
+
 }

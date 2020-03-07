@@ -14,7 +14,6 @@ class RecipeDetailsViewController: UIViewController, Storyboarded {
 
     @IBOutlet weak var recipeDetailsTableView: UITableView!
 
-    var coordinator: SearchCoordinator?
     var viewModel: RecipeDetailsViewModel!
 
     override func viewDidLoad() {

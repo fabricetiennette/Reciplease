@@ -16,7 +16,6 @@ class SearchViewController: UIViewController, Storyboarded {
     @IBOutlet private weak var ingredientTextField: UITextField!
     @IBOutlet private weak var addButton: UIButton!
 
-    var coordinator: SearchCoordinator?
     var viewModel: SearchViewModel!
 
     override func viewWillLayoutSubviews() {
@@ -36,9 +35,7 @@ class SearchViewController: UIViewController, Storyboarded {
     }
 
     @IBAction func searchButtonTapped(_ sender: Any) {
-        print("tapped")
-        let ingredient = viewModel.ingredients
-        coordinator?.searchForRecipes(with: ingredient)
+        viewModel.searchForRecipes()
     }
 }
 
@@ -47,11 +44,17 @@ private extension SearchViewController {
         navigationController?.navigationBar.prefersLargeTitles = viewModel.prefersLargeTitles
         navigationItem.title = viewModel.title
         ingredientTextField.addBottomBorderWithColor(color: .brown, width: 0.5)
+        tableView.setEmptyMessage("Ingredients missing 😢")
     }
 
     func configureViewModel() {
         viewModel.errorHandler = { title, message in
             self.showAlert(title: title, message: message)
+        }
+        viewModel.messageHandler = { text in
+            if self.viewModel.userIngredients.isEmpty {
+                self.tableView.setEmptyMessage(text)
+            }
         }
         viewModel.reloadHandler = tableView.reloadData
     }
@@ -98,6 +101,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientCell", for: indexPath) as! IngredientCell
+            tableView.restore()
             cell.configureCell(ingredient, indexPath)
             return cell
         }

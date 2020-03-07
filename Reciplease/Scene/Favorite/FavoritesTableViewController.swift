@@ -1,3 +1,4 @@
+// swiftlint:disable force_cast
 //
 //  FavoritesTableViewController.swift
 //  Reciplease
@@ -53,7 +54,7 @@ extension FavoritesTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "recipeFavorite", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "recipeFavorite", for: indexPath) as! FavoriteCell
         return cell
     }
 

@@ -17,4 +17,5 @@ struct SelectedRecipe {
     let ingredientLines: [String?]
     let calories: Double?
     let time: String?
+    let ingredientChoose: String?
 }

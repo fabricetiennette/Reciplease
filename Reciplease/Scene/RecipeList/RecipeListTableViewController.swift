@@ -12,8 +12,6 @@ import NVActivityIndicatorView
 
 class RecipeListTableViewController: UITableViewController, Storyboarded {
 
-    var coordinator: SearchCoordinator?
-
     var viewModel: RecipeListViewModel!
 
     override func viewWillLayoutSubviews() {
@@ -44,7 +42,7 @@ extension RecipeListTableViewController: NVActivityIndicatorViewable {
     func configureViewModel() {
         viewModel.recipeHandler = { [weak self] recipe in
             guard let me = self else { return }
-            me.coordinator?.showRecipeDetail(with: recipe)
+            me.viewModel.showRecipeDetail(with: recipe)
         }
 
         viewModel.reloadHandler = { [weak self] in
@@ -83,6 +81,9 @@ extension RecipeListTableViewController {
         let recipe = viewModel.recipe[indexPath.item].recipe
         let ingredient =  viewModel.ingredient
             let cell = tableView.dequeueReusableCell(withIdentifier: "recipeListCell", for: indexPath) as! RecipeListCell
+        cell.favoriteTapHandler = {
+//            viewModel.
+        }
         cell.configureCell(recipe: recipe, ingredient: ingredient, indexPath: indexPath)
         return cell
     }
