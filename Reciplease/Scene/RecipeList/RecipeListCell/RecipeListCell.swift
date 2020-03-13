@@ -15,9 +15,7 @@ class RecipeListCell: UITableViewCell {
     @IBOutlet weak var recipeTime: UILabel!
     @IBOutlet weak var recipeYield: UILabel!
     @IBOutlet weak var recipeIngredients: UILabel!
-    @IBOutlet weak var heartIcon: UIImageView!
 
-    var favoriteTapHandler: () -> Void = {}
     var source = ""
     var calories = 0.0
     var ingredientLines: [String] = []
@@ -25,22 +23,13 @@ class RecipeListCell: UITableViewCell {
 
     private var recipe: Recipe!
 
-    @IBAction func favoriteButtonTapped(_ sender: Any) {
-        favoriteTapHandler()
-        heartIcon.isHighlighted = (heartIcon.isHighlighted == true) ? false : true
-      }
-
     func configureCell(recipe: Recipe, ingredient: String, indexPath: IndexPath) {
         self.recipe = recipe
 
-        source = recipe.source
-        calories = recipe.calories
-        ingredientLines = recipe.ingredientLines
-        url = recipe.url
-
         if let url = URL(string: recipe.image) {
-            guard let data = try? Data(contentsOf: url) else { return }
-            recipeImage.image = UIImage(data: data)
+            if let data = try? Data(contentsOf: url) {
+                recipeImage.image = UIImage(data: data)
+            }
         }
 
         if recipe.time == 0.0 {
@@ -49,6 +38,10 @@ class RecipeListCell: UITableViewCell {
             recipeTime.text = "\(Int(recipe.time)) MINUTES"
         }
 
+        source = recipe.source
+        calories = recipe.calories
+        ingredientLines = recipe.ingredientLines
+        url = recipe.url
         recipeTitle.text = recipe.title
         recipeYield.text = String(recipe.yield)
         recipeIngredients.text = ingredient.replacingOccurrences(of: "+", with: ", ")

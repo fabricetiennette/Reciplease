@@ -24,16 +24,14 @@ class SearchHeaderCell: UITableViewCell {
         if ingredient.count == 0 {
             searchButton.slideOut()
             clearButton.isHidden = true
-            yourIngredientLabel.isHidden = true
             searchButton.isHidden = true
         } else {
             showButton(searchButton)
             clearButton.isHidden = false
-            yourIngredientLabel.isHidden = false
         }
     }
 
-    func showButton(_ searchButton: UIButton) {
+    private func showButton(_ searchButton: UIButton) {
         if searchButton.isHidden {
             searchButton.slideInFromTop()
         }

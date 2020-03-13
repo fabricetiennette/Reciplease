@@ -16,8 +16,14 @@ class TitleCell: UITableViewCell {
 
     private var recipe: SelectedRecipe!
 
-    func configureCell(recipe: SelectedRecipe, indexPath: IndexPath) {
+    func configureCell(recipe: SelectedRecipe, favoriteButton: UIBarButtonItem, indexPath: IndexPath) {
         self.recipe = recipe
+
+        if recipe.isFavorite {
+            favoriteButton.image = UIImage(systemName: "heart.fill")
+        } else {
+            favoriteButton.image = UIImage(systemName: "heart")
+        }
 
         imageFromRecipe.image = recipe.image
         titleLabel.text = recipe.title

@@ -25,10 +25,15 @@ class SearchViewController: UIViewController, Storyboarded {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewModel()
+        configureView()
+    }
+
+    @objc func tapView() {
+        view.endEditing(true)
     }
 
     @IBAction func addButtonTapped(_ sender: Any) {
-        ingredientTextField.resignFirstResponder()
+        view.endEditing(true)
         guard let ingredient = ingredientTextField.text else { return }
         viewModel.addIngredient(ingredient)
         ingredientTextField.text?.removeAll()
@@ -44,7 +49,11 @@ private extension SearchViewController {
         navigationController?.navigationBar.prefersLargeTitles = viewModel.prefersLargeTitles
         navigationItem.title = viewModel.title
         ingredientTextField.addBottomBorderWithColor(color: .brown, width: 0.5)
-        tableView.setEmptyMessage("Ingredients missing 😢")
+    }
+
+    func configureView() {
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapView)))
+        emtpyMessage("Ingredients missing 😢")
     }
 
     func configureViewModel() {
@@ -52,11 +61,17 @@ private extension SearchViewController {
             self.showAlert(title: title, message: message)
         }
         viewModel.messageHandler = { text in
-            if self.viewModel.userIngredients.isEmpty {
-                self.tableView.setEmptyMessage(text)
-            }
+            self.emtpyMessage(text)
         }
         viewModel.reloadHandler = tableView.reloadData
+    }
+
+    func emtpyMessage(_ text: String) {
+        if viewModel.userIngredients.isEmpty {
+            tableView.setEmptyMessage(text)
+        } else {
+            tableView.restore()
+        }
     }
 }
 
@@ -101,7 +116,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientCell", for: indexPath) as! IngredientCell
-            tableView.restore()
             cell.configureCell(ingredient, indexPath)
             return cell
         }

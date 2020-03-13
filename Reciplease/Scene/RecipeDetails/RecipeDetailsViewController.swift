@@ -9,25 +9,41 @@
 
 import UIKit
 import SafariServices
+import CoreData
 
 class RecipeDetailsViewController: UIViewController, Storyboarded {
 
-    @IBOutlet weak var recipeDetailsTableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var favoriteUIBarButton: UIBarButtonItem!
 
     var viewModel: RecipeDetailsViewModel!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillLayoutSubviews() {
         navigationController?.navigationBar.prefersLargeTitles = false
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureViewModel()
+    }
+
+    @IBAction func addFavoriteTapped(_ sender: Any) {
+        viewModel.makeFavoriteOrNot(with: favoriteUIBarButton)
+    }
+
     @IBAction func getDirectionButtonTapped(_ sender: Any) {
-        guard let recipe = viewModel.recipeSelected.url else { return }
-        if let url = URL(string: recipe) {
-            let config = SFSafariViewController.Configuration()
-            config.entersReaderIfAvailable = true
-            let vc = SFSafariViewController(url: url, configuration: config)
-            present(vc, animated: true)
+        viewModel.openRecipeWebPage()
+    }
+}
+
+private extension RecipeDetailsViewController {
+    func configureViewModel() {
+        viewModel.errorHandler = { title, message in
+            self.showAlert(title: title, message: message)
+        }
+        viewModel.safariServicesHandler = { [weak self] viewController in
+            guard let me = self else { return }
+            me.present(viewController, animated: true)
         }
     }
 }
@@ -35,11 +51,13 @@ class RecipeDetailsViewController: UIViewController, Storyboarded {
 extension RecipeDetailsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-           // #warning Incomplete implementation, return the number of sections
            return 4
        }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
         switch section {
         case 3:
             return viewModel.recipeSelected.ingredientLines.count
@@ -48,7 +66,10 @@ extension RecipeDetailsViewController: UITableViewDelegate, UITableViewDataSourc
         }
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(
+        _ tableView: UITableView,
+        heightForRowAt indexPath: IndexPath
+    ) -> CGFloat {
         switch indexPath.section {
         case 0:
             return 375
@@ -61,12 +82,19 @@ extension RecipeDetailsViewController: UITableViewDelegate, UITableViewDataSourc
         }
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         let recipe = viewModel.recipeSelected
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
+        let recipe = viewModel.recipeSelected
             switch indexPath.section {
             case 0:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "titleCell", for: indexPath) as! TitleCell
-                cell.configureCell(recipe: recipe, indexPath: indexPath)
+                cell.configureCell(
+                    recipe: recipe,
+                    favoriteButton: favoriteUIBarButton,
+                    indexPath: indexPath
+                )
                 return cell
             case 1:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "recipeTimeCell", for: indexPath) as! RecipePTKCell
@@ -83,5 +111,14 @@ extension RecipeDetailsViewController: UITableViewDelegate, UITableViewDataSourc
                 break
         }
         return UITableViewCell()
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let yassis = -scrollView.contentOffset.y
+        let height = max(yassis, 60)
+        if let imageView = tableView.dequeueReusableCell(withIdentifier: "recipeFavorite") as? TitleCell {
+            imageView.imageFromRecipe.contentMode = .scaleAspectFill
+        imageView.imageFromRecipe.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: height)
+        }
     }
 }

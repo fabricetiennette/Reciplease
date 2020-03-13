@@ -9,13 +9,13 @@
 import UIKit
 
 /// Manages everything launched from the Search tab in the app.
-class SearchCoordinator: Coordinator {
-    var navigationController: NavigationController
+class SearchCoordinator {
 
-    init(navigationController: NavigationController = .init()) {
+    var navigationController: UINavigationController
+
+    init(navigationController: UINavigationController = .init()) {
         self.navigationController = navigationController
         navigationController.navigationBar.prefersLargeTitles = true
-        navigationController.coordinator = self
         start()
     }
 

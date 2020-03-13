@@ -14,7 +14,7 @@ protocol SearchViewModeldelegate: class {
 
 class SearchViewModel {
 
-    weak var delegate: SearchViewModeldelegate?
+    private weak var delegate: SearchViewModeldelegate?
 
     var errorHandler: (_ title: String, _ message: String) -> Void = { _, _ in }
     var messageHandler: (_ text: String) -> Void = { _ in }

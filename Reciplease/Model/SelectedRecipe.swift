@@ -18,4 +18,5 @@ struct SelectedRecipe {
     let calories: Double?
     let time: String?
     let ingredientChoose: String?
+    let isFavorite: Bool
 }

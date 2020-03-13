@@ -19,11 +19,7 @@ class RecipeListTableViewController: UITableViewController, Storyboarded {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        if viewModel.recipe.isEmpty {
-            let size = CGSize(width: 50, height: 50)
-            startAnimating(size, type: .pacman, color: .brown, fadeInAnimation: nil)
-            viewModel.getRecipes()
-        }
+        getMyRecipes()
     }
 
     override func viewDidLoad() {
@@ -34,12 +30,20 @@ class RecipeListTableViewController: UITableViewController, Storyboarded {
 
 extension RecipeListTableViewController: NVActivityIndicatorViewable {
 
-    func configureNavigationBar() {
+    private func configureNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Recipes list"
     }
 
-    func configureViewModel() {
+    private func getMyRecipes() {
+        if viewModel.recipe.isEmpty {
+            let size = CGSize(width: 50, height: 50)
+            startAnimating(size, type: .pacman, color: .brown, fadeInAnimation: nil)
+            viewModel.getRecipes()
+        }
+    }
+
+    private func configureViewModel() {
         viewModel.recipeHandler = { [weak self] recipe in
             guard let me = self else { return }
             me.viewModel.showRecipeDetail(with: recipe)
@@ -59,38 +63,45 @@ extension RecipeListTableViewController: NVActivityIndicatorViewable {
     }
 }
 
-extension RecipeListTableViewController {
-
     // MARK: - Table view data source
 
+extension RecipeListTableViewController {
+
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+    override func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
         return viewModel.recipe.count
     }
 
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(
+        _ tableView: UITableView,
+        heightForRowAt indexPath: IndexPath
+    ) -> CGFloat {
         return 250
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let recipe = viewModel.recipe[indexPath.item].recipe
+    override func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
+        let recipe = viewModel.recipe[indexPath.row].recipe
         let ingredient =  viewModel.ingredient
             let cell = tableView.dequeueReusableCell(withIdentifier: "recipeListCell", for: indexPath) as! RecipeListCell
-        cell.favoriteTapHandler = {
-//            viewModel.
-        }
         cell.configureCell(recipe: recipe, ingredient: ingredient, indexPath: indexPath)
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
         let selectedCell = tableView.cellForRow(at: indexPath) as! RecipeListCell
-        viewModel.showDetails(of: selectedCell)
+        viewModel.getDetails(of: selectedCell)
     }
 }

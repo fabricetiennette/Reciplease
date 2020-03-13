@@ -15,36 +15,32 @@ class FavoriteCell: UITableViewCell {
     @IBOutlet weak var recipeTime: UILabel!
     @IBOutlet weak var recipeYield: UILabel!
     @IBOutlet weak var recipeIngredients: UILabel!
-    @IBOutlet weak var heartIcon: UIImageView!
 
-    private var recipe: SelectedRecipe!
-    var favoriteHandler: () -> Void = { }
+    var source = ""
+    var calories = 0.0
+    var ingredientLines: [String] = []
+    var url = ""
 
-    @IBAction func favoriteButtonTapped(_ sender: Any) {
-        favoriteHandler()
-        heartIcon.isHighlighted = (heartIcon.isHighlighted == true) ? false : true
-      }
+    private var recipe: MyRecipe!
 
-    func configureCell(recipe: SelectedRecipe, indexPath: IndexPath) {
+    func configureCell(recipe: MyRecipe, indexPath: IndexPath) {
         self.recipe = recipe
 
-        //        source = recipe.source
-        //        calories = recipe.calories
-        //        ingredientLines = recipe.ingredientLines
-        //        url = recipe.url
+        guard let sourceR = recipe.source,
+            let ingredient = recipe.ingredientLines,
+            let link = recipe.url else { return }
 
-        //        if let url = URL(string: recipe.image) {
-        //            guard let data = try? Data(contentsOf: url) else { return }
-        recipeImage.image = recipe.image
-        //        }
-        //        if recipe.time == 0.0 {
-        //            recipeTime.text = "N.A"
-        //        } else {
+        if let data = recipe.image {
+            recipeImage.image = UIImage(data: data)
+        }
+
+        source = sourceR
+        calories = recipe.calories
+        ingredientLines = ingredient
+        url = link
         recipeTime.text = recipe.time
-        //        }
-
         recipeTitle.text = recipe.title
         recipeYield.text = recipe.yield
-        recipeIngredients.text = recipe.ingredientChoose
+        recipeIngredients.text = recipe.ingredientsChoose?.replacingOccurrences(of: "+", with: ", ")
     }
 }

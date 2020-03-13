@@ -8,23 +8,33 @@
 
 import UIKit
 
-class FavoritesCoordinator: Coordinator {
-    var favoriteNavController = NavigationController()
+class FavoritesCoordinator {
+
+    var favoriteNavController = UINavigationController()
 
     init() {
         favoriteNavController.navigationBar.prefersLargeTitles = true
-        favoriteNavController.coordinator = self
         start()
     }
 
     func start() {
+        let viewModel = FavoriteViewModel(delegate: self)
         let viewController = FavoritesTableViewController.instantiate()
-        viewController.tabBarItem = UITabBarItem(title: "Favorite", image: UIImage(systemName: "heart"), tag: 1)
-        viewController.coordinator = self
+        viewController.viewModel = viewModel
+        viewController.tabBarItem = UITabBarItem(title: "Favorites", image: UIImage(systemName: "heart"), tag: 1)
         favoriteNavController.viewControllers = [viewController]
+    }
+
+    func showRecipeDetail(with selectedRecipe: SelectedRecipe) {
+        let viewModel = RecipeDetailsViewModel(recipeSelected: selectedRecipe)
+        let viewController = RecipeDetailsViewController.instantiate()
+        viewController.viewModel = viewModel
+        favoriteNavController.pushViewController(viewController, animated: true)
     }
 }
 
-extension FavoritesCoordinator {
-
+extension FavoritesCoordinator: FavoriteViewModelDelegate {
+    func showingRecipeDetails(with selectedRecipe: SelectedRecipe) {
+        showRecipeDetail(with: selectedRecipe)
+    }
 }
