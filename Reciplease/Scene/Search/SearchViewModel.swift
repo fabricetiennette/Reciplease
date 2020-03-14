@@ -38,15 +38,6 @@ class SearchViewModel {
         "Search"
     }
 
-    func numberOfRows(in section: Int) -> Int {
-        switch section {
-        case 0:
-            return 1
-        default:
-            return userIngredients.count
-        }
-    }
-
     func addIngredient(_ ingredient: String) {
         if ingredient.hasSpecialCharacters() {
             errorHandler("Error", "Please enter a valid ingredient")

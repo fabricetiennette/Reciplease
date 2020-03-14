@@ -11,16 +11,17 @@ import Alamofire
 struct RecipleaseClient {
 
     private let session: Session
-    let baseURL = "https://api.edamam.com/search?"
-    let appId = "13a8cfe3"
-    let appKey = "52ba666b724b469493e5b13708898d64"
+    private let baseURL = "https://api.edamam.com/search?"
+    private let appId = "13a8cfe3"
+    private let appKey = "52ba666b724b469493e5b13708898d64"
 
     init(session: Session = Session.default) {
         self.session = session
     }
 
-    // MARK: - getRecipes
-    func getRecipes(
+    // MARK: - getRecipesFromEdamam
+
+    func getRecipesFromEdamam(
         with ingredients: String,
         callback: @escaping (Result<RecipeData, Error>) -> Void
     ) {

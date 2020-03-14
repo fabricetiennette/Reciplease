@@ -45,6 +45,7 @@ private extension RecipeDetailsViewController {
             guard let me = self else { return }
             me.present(viewController, animated: true)
         }
+        viewModel.stackErrorHandler()
     }
 }
 
@@ -58,12 +59,7 @@ extension RecipeDetailsViewController: UITableViewDelegate, UITableViewDataSourc
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        switch section {
-        case 3:
-            return viewModel.recipeSelected.ingredientLines.count
-        default:
-            return 1
-        }
+        return viewModel.numberOfRowsInSection(section)
     }
 
     func tableView(

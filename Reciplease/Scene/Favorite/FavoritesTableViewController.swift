@@ -8,7 +8,6 @@
 //
 
 import UIKit
-import NVActivityIndicatorView
 
 class FavoritesTableViewController: UITableViewController, Storyboarded {
 
@@ -16,13 +15,12 @@ class FavoritesTableViewController: UITableViewController, Storyboarded {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        startAnimating()
         configureViewModel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateMyFavoritesRecipes()
+        viewModel.updateFavorites()
         configureNavBar()
     }
 }
@@ -37,14 +35,6 @@ private extension FavoritesTableViewController {
         navigationController.navigationBar.sizeToFit()
     }
 
-    func updateMyFavoritesRecipes() {
-//        if viewModel.favorites.isEmpty {
-//            let size = CGSize(width: 50, height: 50)
-//            startAnimating(size, type: .pacman, color: .brown, fadeInAnimation: nil)
-//        }
-        viewModel.updateFavorites()
-    }
-
     func configureViewModel() {
         viewModel.recipeHandler = { [weak self] recipe in
             guard let me = self else { return }
@@ -53,18 +43,14 @@ private extension FavoritesTableViewController {
         viewModel.favoriteIsNotEmptyHandler = { [weak self] in
             guard let me = self else { return }
             me.tableView.restore()
-//            me.stopAnimating()
         }
         viewModel.favoritesIsEmptyHandler = { [weak self] in
             guard let me = self else { return }
             me.tableView.setEmptyMessage("No Favorites")
-//            me.stopAnimating()
         }
         viewModel.reloadHandler = tableView.reloadData
     }
 }
-
-extension FavoritesTableViewController: NVActivityIndicatorViewable {}
 
     // MARK: - Table view data source
 
@@ -103,7 +89,7 @@ extension FavoritesTableViewController {
         didSelectRowAt indexPath: IndexPath
     ) {
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
-        let selectedRecipeRow = tableView.cellForRow(at: indexPath) as? FavoriteCell
-        viewModel.getDetails(of: selectedRecipeRow)
+        let recipeSelected = tableView.cellForRow(at: indexPath) as? FavoriteCell
+        viewModel.getDetails(of: recipeSelected)
     }
 }

@@ -23,22 +23,28 @@ class RecipeDetailsViewModel {
         self.stack = stack
     }
 
+    func stackErrorHandler() {
+        stack.errorHandler = { title, message in
+            self.errorHandler(title, message)
+        }
+    }
+
     private func recipeToBeSaved(
         _ recipe: SelectedRecipe,
         _ favoriteB: UIBarButtonItem
     ) {
         guard let title = recipe.title else { return }
-        let check = stack.isEntityAttributeExist(title)
+        let check = stack.isEntityExist(title)
         if check {
-            errorHandler("Error", "Already in favorites")
+            errorHandler("Error", "Already in your favorites")
             favoriteB.image = UIImage(systemName: "heart")
         } else {
-            stack.saveRecipe(recipe)
+            stack.saveRecipeInStack(recipe)
         }
     }
 
     private func recipeToBeDeleted(_ recipe: SelectedRecipe) {
-        stack.deleteOneRecipe(recipe)
+        stack.deleteOneRecipeInStack(recipe)
     }
 
     func openRecipeWebPage() {
@@ -60,6 +66,15 @@ class RecipeDetailsViewModel {
             recipeToBeSaved(recipe, favoriteButton)
         } else {
             recipeToBeDeleted(recipe)
+        }
+    }
+
+    func numberOfRowsInSection(_ section: Int) -> Int {
+        switch section {
+        case 3:
+            return recipeSelected.ingredientLines.count
+        default:
+            return 1
         }
     }
 }

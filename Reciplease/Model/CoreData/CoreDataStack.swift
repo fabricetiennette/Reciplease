@@ -1,4 +1,3 @@
-// swiftlint:disable force_cast force_try weak_delegate
 //
 //  CoreDataStack.swift
 //  Reciplease
@@ -16,17 +15,22 @@ enum CoreDataError: Error {
 
 class CoreDataStack {
 
-    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    private weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
+    var errorHandler: (_ title: String, _ message: String) -> Void = { _, _ in }
 
     private var context: NSManagedObjectContext {
-        return appDelegate.persistentContainer.viewContext
+        return (appDelegate?.persistentContainer.viewContext)!
     }
 
     private func save() {
-        appDelegate.saveContext()
+        do {
+            try context.save()
+        } catch {
+            errorHandler("Error", "Couldn't save change")
+        }
     }
 
-    func saveRecipe(_ recipeSelected: SelectedRecipe?) {
+    func saveRecipeInStack(_ recipeSelected: SelectedRecipe?) {
         guard let recipe = recipeSelected else { return }
         let newRecipe = MyRecipe(context: context)
         newRecipe.title = recipe.title
@@ -42,10 +46,10 @@ class CoreDataStack {
         if let calories = recipe.calories {
             newRecipe.calories = calories
         }
-        save()
+        appDelegate?.saveContext()
     }
 
-    func getRecipes(callback: @escaping (Result <[MyRecipe], Error>) -> Void) {
+    func getRecipesfromStack(callback: @escaping (Result <[MyRecipe], Error>) -> Void) {
         let request: NSFetchRequest<MyRecipe> = MyRecipe.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
         request.sortDescriptors = [sortDescriptor]
@@ -57,35 +61,36 @@ class CoreDataStack {
             if recipes.isEmpty {
                 callback(.failure(CoreDataError.noRecipes))
             }
+
         } catch {
             callback(.failure(error))
-            print(error.localizedDescription)
         }
     }
 
-    func isEntityAttributeExist(_ title: String) -> Bool {
+    func isEntityExist(_ title: String) -> Bool {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "MyRecipe")
         request.predicate = NSPredicate(format: "title = %@", title)
-        let result = try! context.fetch(request)
-        return result.count > 0
+        do {
+            let result = try context.fetch(request)
+            return result.count > 0
+        } catch {
+            return false
+        }
     }
 
-    func deleteOneRecipe(_ recipe: SelectedRecipe) {
+    func deleteOneRecipeInStack(_ recipe: SelectedRecipe) {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "MyRecipe")
         guard let title = recipe.title else { return }
         request.predicate = NSPredicate(format: "title = %@", title)
         do {
-            let results = try context.fetch(request) as! [NSManagedObject]
-            for entity in results {
-                context.delete(entity)
-                do {
-                    try context.save()
-                } catch {
-                    print(error.localizedDescription)
+            if let results = try context.fetch(request) as? [NSManagedObject] {
+                for entity in results {
+                    context.delete(entity)
                 }
+                save()
             }
         } catch {
-            print(error.localizedDescription)
+            errorHandler("Error", "A problem occurs while attemping to delete your recipe")
         }
     }
 }

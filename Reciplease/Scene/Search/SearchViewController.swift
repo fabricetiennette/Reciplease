@@ -15,6 +15,7 @@ class SearchViewController: UIViewController, Storyboarded {
     @IBOutlet private weak var searchButton: UIButton!
     @IBOutlet private weak var ingredientTextField: UITextField!
     @IBOutlet private weak var addButton: UIButton!
+    @IBOutlet private weak var clearButton: UIButton!
 
     var viewModel: SearchViewModel!
 
@@ -42,6 +43,10 @@ class SearchViewController: UIViewController, Storyboarded {
     @IBAction func searchButtonTapped(_ sender: Any) {
         viewModel.searchForRecipes()
     }
+
+    @IBAction func clearButtonTapped(_ sender: Any) {
+        viewModel.userIngredients.removeAll()
+    }
 }
 
 private extension SearchViewController {
@@ -68,6 +73,9 @@ private extension SearchViewController {
 
     func emtpyMessage(_ text: String) {
         if viewModel.userIngredients.isEmpty {
+            searchButton.slideOut()
+            clearButton.isHidden = true
+            searchButton.isHidden = true
             tableView.setEmptyMessage(text)
         } else {
             tableView.restore()
@@ -80,26 +88,21 @@ private extension SearchViewController {
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
 
     func tableView(
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return viewModel.numberOfRows(in: section)
+        return viewModel.userIngredients.count
     }
 
     func tableView(
         _ tableView: UITableView,
         heightForRowAt indexPath: IndexPath
     ) -> CGFloat {
-        switch indexPath.section {
-        case 0:
-            return 70
-        default:
-            return 50
-        }
+        return 50
     }
 
     func tableView(
@@ -107,19 +110,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
         let ingredient = viewModel.userIngredients
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "searchHeaderCell", for: indexPath) as! SearchHeaderCell
-            cell.removeIngredientHandler = {
-                self.viewModel.userIngredients.removeAll()
-            }
-            cell.configureCell(ingredient, searchButton)
-            return cell
-        } else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientCell", for: indexPath) as! IngredientCell
-            cell.configureCell(ingredient, indexPath)
-            return cell
-        }
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientCell", for: indexPath) as! IngredientCell
+        cell.configureCell(ingredient, indexPath, searchButton, clearButton)
+        return cell
     }
 
     func tableView(

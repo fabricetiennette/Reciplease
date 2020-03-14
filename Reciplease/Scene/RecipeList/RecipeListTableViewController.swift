@@ -57,7 +57,7 @@ extension RecipeListTableViewController: NVActivityIndicatorViewable {
 
         viewModel.errorHandler = { [weak self] title, message in
             guard let me = self else { return }
-            me.showAlert(title: title, message: message)
+            me.showAlertWithDismissAction(title: title, message: message)
             me.stopAnimating()
         }
     }

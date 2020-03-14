@@ -35,7 +35,7 @@ class RecipeListViewModel {
     }
 
     func getRecipes() {
-        resipleaseClient.getRecipes(with: ingredient) { [weak self] result in
+        resipleaseClient.getRecipesFromEdamam(with: ingredient) { [weak self] result in
             guard let me = self else { return }
             switch result {
             case .success(let recipeData):
