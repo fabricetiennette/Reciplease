@@ -16,7 +16,7 @@ protocol FavoriteViewModelDelegate: class {
 class FavoriteViewModel {
 
     private weak var delegate: FavoriteViewModelDelegate?
-    private let stack: CoreDataStack
+    private let stack: CoreDataManager
 
     var recipeHandler: (_ selectedRecipe: SelectedRecipe) -> Void = { _ in }
     var favoriteIsNotEmptyHandler: () -> Void = {}
@@ -28,7 +28,9 @@ class FavoriteViewModel {
         }
     }
 
-    init(delegate: FavoriteViewModelDelegate?, stack: CoreDataStack = .init()) {
+    init(
+        delegate: FavoriteViewModelDelegate?,
+        stack: CoreDataManager) {
         self.delegate = delegate
         self.stack = stack
     }

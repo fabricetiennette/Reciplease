@@ -12,10 +12,14 @@ import UIKit
 class SearchCoordinator {
 
     var navigationController: UINavigationController
+    var coreDataManager: CoreDataManager!
 
     init(navigationController: UINavigationController = .init()) {
         self.navigationController = navigationController
         navigationController.navigationBar.prefersLargeTitles = true
+        guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let stack = appdelegate.coreDataStack
+        coreDataManager = CoreDataManager(coreDataStack: stack)
         start()
     }
 
@@ -35,7 +39,7 @@ class SearchCoordinator {
     }
 
     func showRecipeDetail(with selectedRecipe: SelectedRecipe) {
-        let viewModel = RecipeDetailsViewModel(recipeSelected: selectedRecipe)
+        let viewModel = RecipeDetailsViewModel(recipeSelected: selectedRecipe, stack: coreDataManager)
         let viewController = RecipeDetailsViewController.instantiate()
         viewController.viewModel = viewModel
         navigationController.pushViewController(viewController, animated: true)

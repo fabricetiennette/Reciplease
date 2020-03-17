@@ -12,21 +12,18 @@ import CoreData
 
 class RecipeDetailsViewModel {
 
-    private let stack: CoreDataStack
+    private let stack: CoreDataManager
     private(set) var recipeSelected: SelectedRecipe
 
     var safariServicesHandler: (_ vc: SFSafariViewController ) -> Void = { _ in }
     var errorHandler: (_ title: String, _ message: String) -> Void = { _, _ in }
 
-    init(recipeSelected: SelectedRecipe, stack: CoreDataStack = .init()) {
+    init(
+        recipeSelected: SelectedRecipe,
+        stack: CoreDataManager
+    ) {
         self.recipeSelected = recipeSelected
         self.stack = stack
-    }
-
-    func stackErrorHandler() {
-        stack.errorHandler = { title, message in
-            self.errorHandler(title, message)
-        }
     }
 
     private func recipeToBeSaved(

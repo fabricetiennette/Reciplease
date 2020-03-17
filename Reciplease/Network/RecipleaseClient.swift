@@ -6,16 +6,16 @@
 //  Copyright © 2020 Fabrice Etiennette. All rights reserved.
 //
 
-import Alamofire
+import Foundation
 
 struct RecipleaseClient {
 
-    private let session: Session
+    private let session: RecipleaseClientSession
     private let baseURL = "https://api.edamam.com/search?"
     private let appId = "13a8cfe3"
     private let appKey = "52ba666b724b469493e5b13708898d64"
 
-    init(session: Session = Session.default) {
+    init(session: RecipleaseClientSession = RecipleaseSession()) {
         self.session = session
     }
 
@@ -27,8 +27,8 @@ struct RecipleaseClient {
     ) {
         guard let recipleaseURL = URL(string: "\(baseURL)q=\(ingredients)&app_id=\(appId)&app_key=\(appKey)") else { return }
 
-        let request = session.request(recipleaseURL)
-        request.responseDecodable(of: RecipeData.self) { (response) in
+        session.request(with: recipleaseURL) { (response) in
+
             guard let data = response.data else {
                 callback(.failure(NetWorkError.noData))
                 return

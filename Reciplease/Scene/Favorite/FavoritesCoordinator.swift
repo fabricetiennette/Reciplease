@@ -11,14 +11,18 @@ import UIKit
 class FavoritesCoordinator {
 
     var favoriteNavController = UINavigationController()
+    var coreDataManager: CoreDataManager!
 
     init() {
         favoriteNavController.navigationBar.prefersLargeTitles = true
+        guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let stack = appdelegate.coreDataStack
+        coreDataManager = CoreDataManager(coreDataStack: stack)
         start()
     }
 
     func start() {
-        let viewModel = FavoriteViewModel(delegate: self)
+        let viewModel = FavoriteViewModel(delegate: self, stack: coreDataManager)
         let viewController = FavoritesTableViewController.instantiate()
         viewController.viewModel = viewModel
         viewController.tabBarItem = UITabBarItem(title: "Favorites", image: UIImage(systemName: "heart"), tag: 1)
@@ -26,7 +30,7 @@ class FavoritesCoordinator {
     }
 
     func showRecipeDetail(with selectedRecipe: SelectedRecipe) {
-        let viewModel = RecipeDetailsViewModel(recipeSelected: selectedRecipe)
+        let viewModel = RecipeDetailsViewModel(recipeSelected: selectedRecipe, stack: coreDataManager)
         let viewController = RecipeDetailsViewController.instantiate()
         viewController.viewModel = viewModel
         favoriteNavController.pushViewController(viewController, animated: true)

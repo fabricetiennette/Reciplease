@@ -16,6 +16,8 @@ class MainTabBarController: UITabBarController, Storyboarded {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         viewControllers = [search.navigationController, favorite.favoriteNavController]
     }
+
 }

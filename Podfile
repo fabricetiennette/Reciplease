@@ -7,8 +7,8 @@ target 'Reciplease' do
 
   # Pods for Reciplease
   pod 'SwiftLint'
-  pod 'Alamofire', '~> 5.0'
   pod 'NVActivityIndicatorView'
+  pod 'Alamofire', '4.9.1'
 
   target 'RecipleaseTests' do
     inherit! :search_paths

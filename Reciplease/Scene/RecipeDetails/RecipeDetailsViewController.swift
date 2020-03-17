@@ -45,7 +45,6 @@ private extension RecipeDetailsViewController {
             guard let me = self else { return }
             me.present(viewController, animated: true)
         }
-        viewModel.stackErrorHandler()
     }
 }
 
