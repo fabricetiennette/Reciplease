@@ -18,13 +18,13 @@ class RecipeListTableViewController: UITableViewController, Storyboarded {
         configureNavigationBar()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        getMyRecipes()
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewModel()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        getMyRecipes()
     }
 }
 
@@ -44,6 +44,7 @@ extension RecipeListTableViewController: NVActivityIndicatorViewable {
     }
 
     private func configureViewModel() {
+        tableView.accessibilityIdentifier = "recipeListId"
         viewModel.recipeHandler = { [weak self] recipe in
             guard let me = self else { return }
             me.viewModel.showRecipeDetail(with: recipe)
@@ -92,6 +93,7 @@ extension RecipeListTableViewController {
         let recipe = viewModel.recipe[indexPath.row].recipe
         let ingredient =  viewModel.ingredient
             let cell = tableView.dequeueReusableCell(withIdentifier: "recipeListCell", for: indexPath) as! RecipeListCell
+        cell.accessibilityIdentifier = "recipeListCell_\(indexPath.row)"
         cell.configureCell(recipe: recipe, ingredient: ingredient, indexPath: indexPath)
         return cell
     }

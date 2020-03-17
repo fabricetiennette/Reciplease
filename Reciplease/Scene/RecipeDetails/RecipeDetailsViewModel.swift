@@ -31,8 +31,7 @@ class RecipeDetailsViewModel {
         _ favoriteB: UIBarButtonItem
     ) {
         guard let title = recipe.title else { return }
-        let check = stack.isEntityExist(title)
-        if check {
+        if stack.isEntityExist(title) {
             errorHandler("Error", "Already in your favorites")
             favoriteB.image = UIImage(systemName: "heart")
         } else {
@@ -57,12 +56,11 @@ class RecipeDetailsViewModel {
     func makeFavoriteOrNot(with favoriteButton: UIBarButtonItem) {
         let fill = UIImage(systemName: "heart.fill")
         let notFill = UIImage(systemName: "heart")
-        let recipe = recipeSelected
         favoriteButton.image = (favoriteButton.image == fill) ? notFill : fill
         if favoriteButton.image == fill {
-            recipeToBeSaved(recipe, favoriteButton)
+            recipeToBeSaved(recipeSelected, favoriteButton)
         } else {
-            recipeToBeDeleted(recipe)
+            recipeToBeDeleted(recipeSelected)
         }
     }
 

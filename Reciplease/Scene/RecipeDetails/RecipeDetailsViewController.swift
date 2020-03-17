@@ -38,6 +38,7 @@ class RecipeDetailsViewController: UIViewController, Storyboarded {
 
 private extension RecipeDetailsViewController {
     func configureViewModel() {
+        favoriteUIBarButton.accessibilityIdentifier = "favoriteBarButton"
         viewModel.errorHandler = { title, message in
             self.showAlert(title: title, message: message)
         }
@@ -102,18 +103,8 @@ extension RecipeDetailsViewController: UITableViewDelegate, UITableViewDataSourc
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientCell", for: indexPath) as! IngredientsListCell
                 cell.configureCell(recipe: recipe, indexPath: indexPath)
                 return cell
-            default:
-                break
+            default: break
         }
         return UITableViewCell()
-    }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let yassis = -scrollView.contentOffset.y
-        let height = max(yassis, 60)
-        if let imageView = tableView.dequeueReusableCell(withIdentifier: "recipeFavorite") as? TitleCell {
-            imageView.imageFromRecipe.contentMode = .scaleAspectFill
-        imageView.imageFromRecipe.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: height)
-        }
     }
 }

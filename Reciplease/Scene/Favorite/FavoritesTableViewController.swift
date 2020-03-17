@@ -36,6 +36,7 @@ private extension FavoritesTableViewController {
     }
 
     func configureViewModel() {
+        tableView.accessibilityIdentifier = "favoritesTableView"
         viewModel.recipeHandler = { [weak self] recipe in
             guard let me = self else { return }
             me.viewModel.showRecipeDetail(with: recipe)
@@ -80,6 +81,7 @@ extension FavoritesTableViewController {
     ) -> UITableViewCell {
         let recipe = viewModel.favorites[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "recipeFavorite", for: indexPath) as! FavoriteCell
+        cell.accessibilityIdentifier = "recipeFavorite_\(indexPath.row)"
         cell.configureCell(recipe: recipe, indexPath: indexPath)
         return cell
     }

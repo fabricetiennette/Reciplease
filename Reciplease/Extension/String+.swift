@@ -15,8 +15,7 @@ extension String {
         )
         if self.rangeOfCharacter(from: set.inverted) != nil || self.isEmpty {
             return true
-        } else {
-            return false
         }
+        return false
     }
 }
