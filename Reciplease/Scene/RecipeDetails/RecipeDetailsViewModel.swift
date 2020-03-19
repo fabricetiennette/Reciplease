@@ -18,10 +18,7 @@ class RecipeDetailsViewModel {
     var safariServicesHandler: (_ vc: SFSafariViewController ) -> Void = { _ in }
     var errorHandler: (_ title: String, _ message: String) -> Void = { _, _ in }
 
-    init(
-        recipeSelected: SelectedRecipe,
-        stack: CoreDataManager
-    ) {
+    init(recipeSelected: SelectedRecipe, stack: CoreDataManager) {
         self.recipeSelected = recipeSelected
         self.stack = stack
     }

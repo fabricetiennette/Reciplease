@@ -14,16 +14,14 @@ class RecipeListTableViewController: UITableViewController, Storyboarded {
 
     var viewModel: RecipeListViewModel!
 
-    override func viewWillLayoutSubviews() {
-        configureNavigationBar()
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewModel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationBar()
         getMyRecipes()
     }
 }
@@ -31,14 +29,22 @@ class RecipeListTableViewController: UITableViewController, Storyboarded {
 extension RecipeListTableViewController: NVActivityIndicatorViewable {
 
     private func configureNavigationBar() {
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = "Recipes list"
+        guard let navigationController = navigationController else { return }
+        navigationController.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "Recipes"
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController.navigationBar.sizeToFit()
     }
 
     private func getMyRecipes() {
         if viewModel.recipe.isEmpty {
             let size = CGSize(width: 50, height: 50)
-            startAnimating(size, type: .pacman, color: .brown, fadeInAnimation: nil)
+            startAnimating(
+                size,
+                type: .pacman,
+                color: .brown,
+                fadeInAnimation: nil
+            )
             viewModel.getRecipes()
         }
     }
@@ -52,14 +58,18 @@ extension RecipeListTableViewController: NVActivityIndicatorViewable {
 
         viewModel.reloadHandler = { [weak self] in
             guard let me = self else { return }
-            me.tableView.reloadData()
-            me.stopAnimating()
+            DispatchQueue.main.async {
+                me.tableView.reloadData()
+                me.stopAnimating()
+            }
         }
 
         viewModel.errorHandler = { [weak self] title, message in
             guard let me = self else { return }
-            me.showAlertWithDismissAction(title: title, message: message)
-            me.stopAnimating()
+            DispatchQueue.main.async {
+                me.showAlertWithDismissAction(title: title, message: message)
+                me.stopAnimating()
+            }
         }
     }
 }
@@ -67,10 +77,6 @@ extension RecipeListTableViewController: NVActivityIndicatorViewable {
     // MARK: - Table view data source
 
 extension RecipeListTableViewController {
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
 
     override func tableView(
         _ tableView: UITableView,

@@ -26,11 +26,7 @@ class RecipeListCell: UITableViewCell {
     func configureCell(recipe: Recipe, ingredient: String, indexPath: IndexPath) {
         self.recipe = recipe
 
-        if let url = URL(string: recipe.image) {
-            if let data = try? Data(contentsOf: url) {
-                recipeImage.image = UIImage(data: data)
-            }
-        }
+        recipeImage.getImage(from: recipe.image)
 
         if recipe.time == 0.0 {
             recipeTime.text = "N.A"

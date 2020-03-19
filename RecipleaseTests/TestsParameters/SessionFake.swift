@@ -22,6 +22,7 @@ class SessionFake: RecipleaseClientSession {
     }
 
     func request(with url: URL, callBack: @escaping (DataResponse<Any>) -> Void) {
+        let urlRequest = URLRequest(url: URL(string: "https://www.apple.com")!)
         let httpResponse = response
         let data = self.data
         let error =  self.error
@@ -31,7 +32,6 @@ class SessionFake: RecipleaseClientSession {
             data: data,
             error: error
         )
-        let urlRequest = URLRequest(url: URL(string: "https://www.apple.com")!)
         callBack(
             DataResponse(
                 request: urlRequest,

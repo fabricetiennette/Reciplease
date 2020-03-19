@@ -36,7 +36,7 @@ class FavoriteViewModel {
     }
 
     func updateFavorites() {
-        stack.getRecipesfromStack { (result) in
+        stack.getRecipesFromStack { (result) in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let recipes):

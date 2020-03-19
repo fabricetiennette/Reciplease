@@ -8,7 +8,6 @@
 
 import UIKit
 
-/// A UITabBarController subclass that sets up our main coordinators as each of the 2 app tabs.
 class MainTabBarController: UITabBarController, Storyboarded {
 
     let search = SearchCoordinator()

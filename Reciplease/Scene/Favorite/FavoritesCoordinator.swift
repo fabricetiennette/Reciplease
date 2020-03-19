@@ -1,5 +1,5 @@
 //
-//  LearnCoordinator.swift
+//  FavoritesCoordinator.swift
 //  Reciplease
 //
 //  Created by Fabrice Etiennette on 21/02/2020.
@@ -25,12 +25,19 @@ class FavoritesCoordinator {
         let viewModel = FavoriteViewModel(delegate: self, stack: coreDataManager)
         let viewController = FavoritesTableViewController.instantiate()
         viewController.viewModel = viewModel
-        viewController.tabBarItem = UITabBarItem(title: "Favorites", image: UIImage(systemName: "heart"), tag: 1)
+        viewController.tabBarItem = UITabBarItem(
+            title: "Favorites",
+            image: UIImage(systemName: "heart"),
+            tag: 1
+        )
         favoriteNavController.viewControllers = [viewController]
     }
 
     func showRecipeDetail(with selectedRecipe: SelectedRecipe) {
-        let viewModel = RecipeDetailsViewModel(recipeSelected: selectedRecipe, stack: coreDataManager)
+        let viewModel = RecipeDetailsViewModel(
+            recipeSelected: selectedRecipe,
+            stack: coreDataManager
+        )
         let viewController = RecipeDetailsViewController.instantiate()
         viewController.viewModel = viewModel
         favoriteNavController.pushViewController(viewController, animated: true)

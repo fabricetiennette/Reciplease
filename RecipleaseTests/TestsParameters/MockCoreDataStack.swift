@@ -7,7 +7,6 @@
 //
 
 import Reciplease
-import Foundation
 import CoreData
 
 final class MockCoreDataStack: CoreDataStack {

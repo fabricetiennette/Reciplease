@@ -19,14 +19,15 @@ class SearchViewController: UIViewController, Storyboarded {
 
     var viewModel: SearchViewModel!
 
-    override func viewWillLayoutSubviews() {
-        configureNavigationBar()
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewModel()
         configureView()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationBar()
     }
 
     @objc func tapView() {

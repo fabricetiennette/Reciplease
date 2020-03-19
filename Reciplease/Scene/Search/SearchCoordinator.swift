@@ -27,7 +27,11 @@ class SearchCoordinator {
         let viewController = SearchViewController.instantiate()
         let viewModel = SearchViewModel(delegate: self)
         viewController.viewModel = viewModel
-        viewController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 0)
+        viewController.tabBarItem = UITabBarItem(
+            title: "Search",
+            image: UIImage(systemName: "magnifyingglass"),
+            tag: 0
+        )
         navigationController.viewControllers = [viewController]
     }
 
@@ -39,7 +43,10 @@ class SearchCoordinator {
     }
 
     func showRecipeDetail(with selectedRecipe: SelectedRecipe) {
-        let viewModel = RecipeDetailsViewModel(recipeSelected: selectedRecipe, stack: coreDataManager)
+        let viewModel = RecipeDetailsViewModel(
+            recipeSelected: selectedRecipe,
+            stack: coreDataManager
+        )
         let viewController = RecipeDetailsViewController.instantiate()
         viewController.viewModel = viewModel
         navigationController.pushViewController(viewController, animated: true)

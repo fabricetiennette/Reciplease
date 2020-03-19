@@ -78,7 +78,7 @@ class RecipeDetailsViewModelTests: XCTestCase {
         favoriteButton.image = fill
 
         // When:
-        coreDataManager.getRecipesfromStack { (result) in
+        coreDataManager.getRecipesFromStack { (result) in
             switch result {
             case .success(let recipe):
                 XCTAssertEqual(recipe.count, 1)
@@ -88,7 +88,7 @@ class RecipeDetailsViewModelTests: XCTestCase {
         recipeDetailsViewModel.makeFavoriteOrNot(with: favoriteButton)
 
         // Then:
-        coreDataManager.getRecipesfromStack { (result) in
+        coreDataManager.getRecipesFromStack { (result) in
             switch result {
             case .success(let recipe):
                 XCTAssertEqual(recipe, [])
@@ -106,7 +106,7 @@ class RecipeDetailsViewModelTests: XCTestCase {
         favoriteButton.image = notFill
 
         // When:
-        coreDataManager.getRecipesfromStack { (result) in
+        coreDataManager.getRecipesFromStack { (result) in
             switch result {
             case .success(let recipe):
                 XCTAssertEqual(recipe, [])
@@ -117,7 +117,7 @@ class RecipeDetailsViewModelTests: XCTestCase {
         recipeDetailsViewModel.makeFavoriteOrNot(with: favoriteButton)
 
         // Then:
-        coreDataManager.getRecipesfromStack { (result) in
+        coreDataManager.getRecipesFromStack { (result) in
             switch result {
             case .success(let recipe):
                 XCTAssertEqual(recipe.count, 1)
@@ -136,7 +136,7 @@ class RecipeDetailsViewModelTests: XCTestCase {
         let expect = expectation(description: "Waiting for error")
 
         // When:
-        coreDataManager.getRecipesfromStack { (result) in
+        coreDataManager.getRecipesFromStack { (result) in
             switch result {
             case .success(let recipe):
                 XCTAssertEqual(recipe.count, 1)

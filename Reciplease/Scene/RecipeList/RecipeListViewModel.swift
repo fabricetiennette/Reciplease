@@ -40,9 +40,7 @@ class RecipeListViewModel {
             switch result {
             case .success(let recipeData):
                 me.recipe = recipeData.hits
-                DispatchQueue.main.async {
-                    me.reloadHandler()
-                }
+                me.reloadHandler()
             case .failure:
                 me.errorHandler("Error", "Cannot get recipes for the moment")
             }

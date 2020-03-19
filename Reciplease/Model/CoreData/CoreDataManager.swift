@@ -19,9 +19,9 @@ class CoreDataManager {
     private let context: NSManagedObjectContext
 
     init(coreDataStack: CoreDataStack) {
-           self.coreDataStack = coreDataStack
-           self.context = coreDataStack.mainContext
-       }
+        self.coreDataStack = coreDataStack
+        self.context = coreDataStack.mainContext
+    }
 
     func saveRecipeInStack(_ recipeSelected: SelectedRecipe?) {
         guard let recipe = recipeSelected else { return }
@@ -42,19 +42,22 @@ class CoreDataManager {
         coreDataStack.saveContext()
     }
 
-    func getRecipesfromStack(callback: @escaping (Result <[MyRecipe], Error>) -> Void) {
+    func getRecipesFromStack(
+        callback: @escaping (
+            Result <[MyRecipe], Error>
+        ) -> Void
+    ) {
         let request: NSFetchRequest<MyRecipe> = MyRecipe.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
         request.sortDescriptors = [sortDescriptor]
-        do {
 
+        do {
             let recipes = try context.fetch(request)
             callback(.success(recipes))
 
             if recipes.isEmpty {
                 callback(.failure(CoreDataError.noRecipes))
             }
-
         } catch {
             callback(.failure(error))
         }
