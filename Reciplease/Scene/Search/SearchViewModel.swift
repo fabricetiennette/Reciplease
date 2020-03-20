@@ -16,13 +16,13 @@ class SearchViewModel {
 
     private weak var delegate: SearchViewModeldelegate?
 
-    var errorHandler: (_ title: String, _ message: String) -> Void = { _, _ in }
-    var messageHandler: (_ text: String) -> Void = { _ in }
-    var reloadHandler: () -> Void = {}
+    var errorHandler: ((_ title: String, _ message: String) -> Void)?
+    var messageHandler: ((_ text: String) -> Void)?
+    var reloadHandler: (() -> Void)?
     var userIngredients: [String] = [] {
         didSet {
-            messageHandler("Ingredients missing 😢")
-            reloadHandler()
+            messageHandler?("Ingredients missing 😢")
+            reloadHandler?()
         }
     }
 
@@ -40,7 +40,7 @@ class SearchViewModel {
 
     func addIngredient(_ ingredient: String) {
         if ingredient.hasSpecialCharacters() {
-            errorHandler("Error", "Please enter a valid ingredient")
+            errorHandler?("Error", "Please enter a valid ingredient")
         } else {
             userIngredients.append(ingredient)
         }

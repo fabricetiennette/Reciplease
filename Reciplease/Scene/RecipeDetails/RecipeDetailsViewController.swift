@@ -38,8 +38,9 @@ private extension RecipeDetailsViewController {
     func configureViewModel() {
         favoriteUIBarButton.accessibilityIdentifier = "favoriteBarButton"
 
-        viewModel.errorHandler = { title, message in
-            self.showAlert(title: title, message: message)
+        viewModel.errorHandler = { [weak self] title, message in
+            guard let me = self else { return }
+            me.showAlert(title: title, message: message)
         }
 
         viewModel.safariServicesHandler = { [weak self] viewController in

@@ -17,10 +17,10 @@ class RecipeListViewModel {
     private weak var delegate: RecipeListViewModelDelegate?
     private let resipleaseClient: RecipleaseClient
 
-    var recipeHandler: (_ selectedRecipe: SelectedRecipe) -> Void = { _ in }
-    var errorHandler: (_ title: String, _ message: String) -> Void = { _, _ in }
+    var recipeHandler: ((_ selectedRecipe: SelectedRecipe) -> Void)?
+    var errorHandler: ((_ title: String, _ message: String) -> Void)?
     var selectedRecipe: [RecipeListCell] = []
-    var reloadHandler: () -> Void = {}
+    var reloadHandler: (() -> Void)?
     var recipe: [Hits] = []
     var ingredient: String
 
@@ -40,9 +40,9 @@ class RecipeListViewModel {
             switch result {
             case .success(let recipeData):
                 me.recipe = recipeData.hits
-                me.reloadHandler()
+                me.reloadHandler?()
             case .failure:
-                me.errorHandler("Error", "Cannot get recipes for the moment")
+                me.errorHandler?("Error", "Cannot get recipes for the moment")
             }
         }
     }
@@ -72,7 +72,7 @@ class RecipeListViewModel {
             ingredientChoose: ingredientChoose,
             isFavorite: false
         )
-        recipeHandler(recipeSelected)
+        recipeHandler?(recipeSelected)
         selectedRecipe.removeAll()
     }
 

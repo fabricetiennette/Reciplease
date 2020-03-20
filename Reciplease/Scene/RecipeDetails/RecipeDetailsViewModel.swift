@@ -15,8 +15,8 @@ class RecipeDetailsViewModel {
     private let stack: CoreDataManager
     private(set) var recipeSelected: SelectedRecipe
 
-    var safariServicesHandler: (_ vc: SFSafariViewController ) -> Void = { _ in }
-    var errorHandler: (_ title: String, _ message: String) -> Void = { _, _ in }
+    var safariServicesHandler: ((_ vc: SFSafariViewController ) -> Void)?
+    var errorHandler: ((_ title: String, _ message: String) -> Void)?
 
     init(recipeSelected: SelectedRecipe, stack: CoreDataManager) {
         self.recipeSelected = recipeSelected
@@ -29,7 +29,7 @@ class RecipeDetailsViewModel {
     ) {
         guard let title = recipe.title else { return }
         if stack.isEntityExist(title) {
-            errorHandler("Error", "Already in your favorites")
+            errorHandler?("Error", "Already in your favorites")
             favoriteB.image = UIImage(systemName: "heart")
         } else {
             stack.saveRecipeInStack(recipe)
@@ -46,7 +46,7 @@ class RecipeDetailsViewModel {
             let config = SFSafariViewController.Configuration()
             config.entersReaderIfAvailable = true
             let vc = SFSafariViewController(url: url, configuration: config)
-            safariServicesHandler(vc)
+            safariServicesHandler?(vc)
         }
     }
 

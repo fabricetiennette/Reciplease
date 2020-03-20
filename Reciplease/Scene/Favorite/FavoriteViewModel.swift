@@ -18,9 +18,9 @@ class FavoriteViewModel {
     private weak var delegate: FavoriteViewModelDelegate?
     private let stack: CoreDataManager
 
-    var recipeHandler: (_ selectedRecipe: SelectedRecipe) -> Void = { _ in }
-    var favoriteIsNotEmptyHandler: () -> Void = {}
-    var favoritesIsEmptyHandler: () -> Void = {}
+    var recipeHandler: ((_ selectedRecipe: SelectedRecipe) -> Void)?
+    var favoriteIsNotEmptyHandler: (() -> Void)?
+    var favoritesIsEmptyHandler: (() -> Void)?
     var reloadHandler: () -> Void = {}
     var favorites: [MyRecipe] = [] {
         didSet {
@@ -41,9 +41,9 @@ class FavoriteViewModel {
                 switch result {
                 case .success(let recipes):
                     self.favorites = recipes
-                    self.favoriteIsNotEmptyHandler()
+                    self.favoriteIsNotEmptyHandler?()
                 case .failure:
-                    self.favoritesIsEmptyHandler()
+                    self.favoritesIsEmptyHandler?()
                 }
             }
         }
@@ -73,7 +73,7 @@ class FavoriteViewModel {
             ingredientChoose: ingredientChoose,
             isFavorite: true
         )
-        recipeHandler(recipeSelected)
+        recipeHandler?(recipeSelected)
     }
 
     func showRecipeDetail(with recipe: SelectedRecipe) {
